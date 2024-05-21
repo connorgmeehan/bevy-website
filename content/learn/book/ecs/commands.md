@@ -82,6 +82,12 @@ fn main() {
     app.run();
 }
 ```
+{{ schedule_diagram_open( width=400, height=100, schedule_text="PostUpdate Schedule" ) }}
+    {{ schedule_system( width=400, height=400, index=0, start=5, end=40, label="spawn_box (System with commands)") }}
+    {{ schedule_system( width=400, height=400, index=1, start=5, end=60, label="move_boxes") }}
+    {{ schedule_divider( width=400, height=400, at=65 ) }}
+    {{ schedule_system( width=400, height=400, index=2, start=70, end=90, label="apply_deferred") }}
+{{ schedule_diagram_close() }}
 
 <svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
     <defs>

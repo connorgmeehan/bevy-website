@@ -1,0 +1,16 @@
+<svg viewBox="0 0 {{width | safe}} {{height | safe}}" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <marker id="arrow" viewBox="0 0 7 7" refX="2.5" refY="2.5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 5 2.5 L 0 5 z" fill="#999"></path>
+        </marker>
+    </defs>
+    <style>
+      .text {
+        font: 8px sans-serif;
+      }
+      .meta {
+        font: 6px sans-serif;
+      }
+    </style>
+  <rect x="10" y="15" width="{{width - 20}}" height="10" rx="2" fill="transparent" stroke="lightblue"></rect>
+  <text x="20" y="23" class="text" fill="lightblue">{{ schedule_text | safe }}</text>

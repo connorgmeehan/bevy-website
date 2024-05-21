@@ -1,0 +1,8 @@
+{% set x = start / 100 * width %}
+{% set y = 40 + index * 15 %}
+{% set width = (end - start) / 100 * width %}
+
+<rect x="{{x}}" y="{{y}}" width="{{width}}" height="10" rx="2" fill="transparent" stroke="white"></rect>
+<text x="{{x + 2}}" class="text" fill="white" y="{{y + 7}}">{{label}}</text>
+<path d="M {{x-5}} 30 L {{x-5}} {{y+5}} L {{x}} {{y+5}}" stroke="#999" fill="transparent" marker-end="url(#arrow)"></path>
+<path d="M {{x+width}} {{y+5}} L {{x+width+5}} {{y+5}} L {{x+width+5}} 30" stroke="#999" fill="transparent" marker-end="url(#arrow)"></path>
