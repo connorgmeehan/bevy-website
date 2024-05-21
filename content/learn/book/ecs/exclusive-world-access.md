@@ -14,9 +14,12 @@ status = 'hidden'
 - ❌ Discuss and demonstrate `SystemParams`?
 {% end %}
 
-In Bevy the [`World`](https://docs.rs/bevy/latest/bevy/prelude/struct.World.html) contains your entire application state. Bevy's parrallelism
-is founded on systems only accessing parts of the world at a time.  However, if you need more immediate or flexible control of World, at the cost of parrallelism,
-you will use exclusive world access. When you have Exclusive World Access you can do a number of things that you wouldn't be able to otherwise:
+In Bevy you'll typically interact with your game's world via [`systems`] and [`SystemParams`], which are performant but sometimes limiting.
+When you need more immediate or dynamic control of the world you will have to use **Exclusive World Access**.
+
+Exclusive World Access is a term to describe updating your game directly and immediately via a mutable reference to the game [`World`], as opposed to a 
+[`Commands`] or [`Query`] parameter on a system.  Because Exclusive World Access borrows the entire world we cannot take advantage of Bevy's Parallelism,
+however it also has a number of unique capabilities:
 
 - Immediately spawn and despawn entities, insert and remove components, and insert and remove resources.  
 - Access components, entities and systems programatically.
@@ -197,7 +200,7 @@ parse a closure that receives a `&mut World` and it will be executed as a comman
 
 ```rust
 fn closure_commands(mut commands: Commands) {
-    // A closure that takes a &mut World is also a Command.
+    // A closure that receives a &mut World argument is also a Command.
     commands.add(|world: &mut World| {
         // Do whatever you want with the `World` here.
     })
@@ -278,7 +281,7 @@ fn exclusive_sys(world: &mut World) {
 
 ### Sending and receiving Events
 
-Events are stores in the [`Events`](https://docs.rs/bevy_ecs/latest/bevy_ecs/event/struct.Events.html) resource and therefore can be accessed via the Resource access methods.
+Events are stores in the [`Events<T>`](https://docs.rs/bevy_ecs/latest/bevy_ecs/event/struct.Events.html) resource and therefore can be accessed via the Resource access methods.
 
 > The [`Events::drain(&mut self)`](https://docs.rs/bevy/latest/bevy/ecs/event/struct.Events.html#method.drain) method is not the same as
 [`EventReader::read(&mut self)`](https://docs.rs/bevy/latest/bevy/ecs/event/struct.EventReader.html#method.read).  `drain` will delete the events from the resource once they've been iterated.
@@ -302,7 +305,7 @@ fn exclusive_sys(world: &mut World) {
 
 ### Accessing Assets
 
-Similarly to events, assets are stored in the [`Assets`](https://docs.rs/bevy_ecs/latest/bevy_ecs/event/struct.Events.html) resource and therefore can be accessed 
+Similarly to events, assets are stored in the [`Assets<T>`](https://docs.rs/bevy_ecs/latest/bevy_ecs/event/struct.Events.html) resource and therefore can be accessed 
 via the Resource access methods.
 
 ```rust
